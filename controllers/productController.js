@@ -36,12 +36,17 @@ async function createProduct(req, res) {
   try {
     const body = await getPostData(req);
 
-    const { name, description, price } = JSON.parse(body);
+    const { name, description, price, category, image, location, event_type } =
+      JSON.parse(body);
 
     const product = {
       name,
       description,
       price,
+      category,
+      image,
+      location,
+      event_type,
     };
     const newProduct = await Product.create(product);
 
@@ -64,12 +69,24 @@ async function updateProduct(req, res, id) {
     } else {
       const body = await getPostData(req);
 
-      const { name, description, price } = JSON.parse(body);
+      const {
+        name,
+        description,
+        price,
+        category,
+        image,
+        location,
+        event_type,
+      } = JSON.parse(body);
 
       const productData = {
         name: name || product.title,
         description: description || product.description,
         price: price || product.price,
+        category: category || product.category,
+        image: image || product.image,
+        location: location || product.location,
+        event_type: event_type || product.event_type,
       };
       const updatedProduct = await Product.update(id, productData);
 
